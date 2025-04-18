@@ -13,12 +13,15 @@ const SearchPage = () => {
         const fetchNews = async () => {
             try {
                 const res = await fetch(
-                    'https://newsapi.org/v2/everything?q=Apple&sortBy=popularity&apiKey=837d1444fd5347bd95f8169fb8d41263');
+                    'https://newsapi.org/v2/everything?' +
+                    'q=Apple&' +
+                    'sortBy=popularity&' +
+                    'apiKey=837d1444fd5347bd95f8169fb8d41263');
                 const data = await res.json();
-                const authorFiltered = data.articles.filter(
+                const authorFiltered = data?.articles?.filter(
                     (article) =>
-                        article.author &&
-                        article.author.toLowerCase().includes(searchTerm.toLowerCase())
+                        article?.author &&
+                        article?.author.toLowerCase().includes(searchTerm.toLowerCase())
                 );
                 setFilteredNews(authorFiltered);
                 setLoading(false);
@@ -38,15 +41,15 @@ const SearchPage = () => {
                 <div style={{ textAlign: 'center' }}>
                     <Spinner animation="border" />
                 </div>
-            ) : filteredNews.length > 0 ? (
-                filteredNews.map((article, index) => (
+            ) : filteredNews?.length > 0 ? (
+                filteredNews?.map((article, index) => (
                     <Card key={index} className="mb-4 card">
-                        <Card.Header className='newsh'>{article.author}</Card.Header>
+                        <Card.Header className='newsh'>{article?.author}</Card.Header>
                         <Card.Body>
-                            <img src={article.urlToImage} alt="" />
-                            <Card.Title className='newst'>{article.title}</Card.Title>
+                            <img src={article?.urlToImage} alt="" />
+                            <Card.Title className='newst'>{article?.title}</Card.Title>
                             <Card.Text className='newstex'>
-                                {article.description}
+                                {article?.description}
                             </Card.Text>
                         </Card.Body>
                     </Card>

@@ -13,11 +13,14 @@ const News = () => {
         const fetchNews = async () => {
             try {
                 const res = await fetch(
-                    'https://newsapi.org/v2/everything?q=Apple&sortBy=popularity&apiKey=837d1444fd5347bd95f8169fb8d41263'
+                    'https://newsapi.org/v2/everything?' +
+                    'q=Apple&' +
+                    'sortBy=popularity&' +
+                    'apiKey=837d1444fd5347bd95f8169fb8d41263'
                 );
                 const data = await res.json();
                 console.log("API Response: ", data);
-                setNews(data.articles);
+                setNews(data?.articles);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching news:', error);
@@ -42,16 +45,16 @@ const News = () => {
                     </div>
                 ) : (
                     <div className="news-list">
-                        {news.map((item, index) => (
+                        {news?.map((item, index) => (
                             <Card key={index} className="mb-4 card">
-                                <Card.Header className='newsh'>{item.author}</Card.Header>
+                                <Card.Header className='newsh'>{item?.author}</Card.Header>
                                 <Card.Body>
-                                    <img src={item.urlToImage} alt="" />
-                                    <Card.Title className='newst'>{item.title}</Card.Title>
+                                    <img src={item?.urlToImage} alt="" />
+                                    <Card.Title className='newst'>{item?.title}</Card.Title>
                                     <Card.Text className='newstex'>
-                                        {item.description}
+                                        {item?.description}
                                     </Card.Text>
-                                    <GoSomewhere title={item.author}/>
+                                    <GoSomewhere title={item?.author} />
                                 </Card.Body>
                             </Card>
                         ))}

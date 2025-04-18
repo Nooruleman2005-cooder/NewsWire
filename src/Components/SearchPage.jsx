@@ -13,15 +13,13 @@ const SearchPage = () => {
         const fetchNews = async () => {
             try {
                 const res = await fetch(
-                    'https://newsapi.org/v2/everything?' +
-                    'q=Apple&' +
-                    'sortBy=popularity&' +
-                    'apiKey=837d1444fd5347bd95f8169fb8d41263');
+                    'https://newsdata.io/api/1/news?apikey=pub_81461a9772b2793a5bedb477880c371a9ded4&q=world%20news '
+                );
                 const data = await res.json();
-                const authorFiltered = data?.articles?.filter(
-                    (article) =>
-                        article?.author &&
-                        article?.author.toLowerCase().includes(searchTerm.toLowerCase())
+                const authorFiltered = data?.results?.filter(
+                    (results) =>
+                        results?.source_name &&
+                        results?.source_name.toLowerCase().includes(searchTerm.toLowerCase())
                 );
                 setFilteredNews(authorFiltered);
                 setLoading(false);
@@ -42,14 +40,14 @@ const SearchPage = () => {
                     <Spinner animation="border" />
                 </div>
             ) : filteredNews?.length > 0 ? (
-                filteredNews?.map((article, index) => (
+                filteredNews?.map((result, index) => (
                     <Card key={index} className="mb-4 card">
-                        <Card.Header className='newsh'>{article?.author}</Card.Header>
+                        <Card.Header className='newsh'>{result?.source_name}</Card.Header>
                         <Card.Body>
-                            <img src={article?.urlToImage} alt="" />
-                            <Card.Title className='newst'>{article?.title}</Card.Title>
+                            <img src={result?.image_url} alt="" />
+                            <Card.Title className='newst'>{result?.title}</Card.Title>
                             <Card.Text className='newstex'>
-                                {article?.description}
+                                {result?.description}
                             </Card.Text>
                         </Card.Body>
                     </Card>

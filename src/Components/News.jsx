@@ -13,14 +13,11 @@ const News = () => {
         const fetchNews = async () => {
             try {
                 const res = await fetch(
-                    'https://newsapi.org/v2/everything?' +
-                    'q=Apple&' +
-                    'sortBy=popularity&' +
-                    'apiKey=837d1444fd5347bd95f8169fb8d41263'
+                    'https://newsdata.io/api/1/news?apikey=pub_81461a9772b2793a5bedb477880c371a9ded4&q=world%20news '
                 );
                 const data = await res.json();
                 console.log("API Response: ", data);
-                setNews(data?.articles);
+                setNews(data?.results);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching news:', error);
@@ -47,14 +44,14 @@ const News = () => {
                     <div className="news-list">
                         {news?.map((item, index) => (
                             <Card key={index} className="mb-4 card">
-                                <Card.Header className='newsh'>{item?.author}</Card.Header>
+                                <Card.Header className='newsh'>{item?.source_name}</Card.Header>
                                 <Card.Body>
-                                    <img src={item?.urlToImage} alt="" />
+                                    <img src={item?.image_url} alt="" />
                                     <Card.Title className='newst'>{item?.title}</Card.Title>
                                     <Card.Text className='newstex'>
                                         {item?.description}
                                     </Card.Text>
-                                    <GoSomewhere title={item?.author} />
+                                    <GoSomewhere title={item?.source_name} />
                                 </Card.Body>
                             </Card>
                         ))}
